@@ -1,0 +1,33 @@
+{
+  "name": "sri-gold-pawn-shop-billing",
+  "version": "1.0.0",
+  "description": "Sri Gold Pawn Shop Billing Desktop Application",
+  "main": "electron/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev:react": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "dev": "concurrently -k -s first \"npm run dev:react\" \"npm run dev:electron\"",
+    "build:react": "vite build",
+    "build": "npm run build:react",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "electron-rebuild -f -w better-sqlite3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.6.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^34.2.0",
+    "vite": "^6.1.0",
+    "wait-on": "^8.0.2"
+  }
+}
