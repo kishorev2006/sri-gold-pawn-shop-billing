@@ -9,3 +9,6 @@ scratch/test_tmp/
 *.log
 .DS_Store
 Thumbs.db
+scratch/test_sandbox_*/
+*.sqlite-shm
+*.sqlite-wal
