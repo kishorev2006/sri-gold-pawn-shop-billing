@@ -206,6 +206,12 @@ function registerCustomerIpcHandlers() {
 
       const db = getDb();
 
+      // Check customer exists
+      const existingCustomer = db.prepare(`SELECT id FROM customers WHERE id = ?`).get(id);
+      if (!existingCustomer) {
+        return { success: false, error: 'Customer not found' };
+      }
+
       // Check duplicate phone with another customer
       const duplicatePhone = db.prepare(`
         SELECT id, customer_code FROM customers WHERE phone = ? AND id != ? AND is_active = 1

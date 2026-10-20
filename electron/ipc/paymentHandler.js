@@ -128,8 +128,10 @@ function calculateLoanInterestSummary(loan, payments = [], calculationDateStr = 
   }
 
   // Prevent double-counting previously paid interest
-  const outstandingInterestPaise = Math.max(0, estimatedTotalAccruedInterestPaise - totalPaidInterestPaise);
-  const totalOutstandingPaise = remainingPrincipalPaise + outstandingInterestPaise;
+  const isClosed = loan.status === 'CLOSED';
+  const effectiveRemainingPrincipalPaise = isClosed ? 0 : remainingPrincipalPaise;
+  const outstandingInterestPaise = isClosed ? 0 : Math.max(0, estimatedTotalAccruedInterestPaise - totalPaidInterestPaise);
+  const totalOutstandingPaise = isClosed ? 0 : (effectiveRemainingPrincipalPaise + outstandingInterestPaise);
 
   return {
     loan,
@@ -137,14 +139,14 @@ function calculateLoanInterestSummary(loan, payments = [], calculationDateStr = 
     totalPaidPrincipalPaise,
     totalPaidInterestPaise,
     totalPaidPenaltyPaise,
-    remainingPrincipalPaise,
+    remainingPrincipalPaise: effectiveRemainingPrincipalPaise,
     elapsedDays: totalElapsedDays,
     accruedInterestPaise: estimatedTotalAccruedInterestPaise,
     estimatedTotalAccruedInterestPaise,
     outstandingInterestPaise,
     totalOutstandingPaise,
     segmentBreakdown,
-    isClosed: loan.status === 'CLOSED'
+    isClosed
   };
 }
 
